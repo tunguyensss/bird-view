@@ -1,11 +1,10 @@
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import React, { useRef } from 'react';
-import { useFrame, useLoader, useThree } from 'react-three-fiber';
+import { useFrame, useLoader } from 'react-three-fiber';
 import * as THREE from 'three';
 import { TextureLoader } from 'three';
-import Images from '../../mapMaterial';
+import { Html } from '@react-three/drei';
 
-extend({ OrbitControls });
+import Images from '../../mapMaterial';
 
 function Box(props) {
   const mesh = useRef();
@@ -24,7 +23,7 @@ function Box(props) {
 
   return (
     <mesh {...props} ref={mesh}>
-      <boxBufferGeometry args={[5, 5, 5]} />
+      <boxBufferGeometry args={[100, 100, 100]} />
       <meshStandardMaterial map={px} attachArray="material" side={THREE.BackSide} />
       <meshStandardMaterial map={nx} attachArray="material" side={THREE.BackSide} />
 
@@ -33,22 +32,12 @@ function Box(props) {
 
       <meshStandardMaterial map={pz} attachArray="material" side={THREE.BackSide} />
       <meshStandardMaterial map={nz} attachArray="material" side={THREE.BackSide} />
+
+      <Html scaleFactor={8}>
+        <div className="content">Test</div>
+      </Html>
     </mesh>
   );
 }
-
-const cameraControl = () => {
-  // ref to ThreeJs
-  const {
-    camera,
-    gl: { domElement },
-  } = useThree();
-
-  // ref to the control
-  // update them every frame using useFrame
-  const controls = useRef();
-  useFrame((state) => controls.current.update());
-  return <orbitControls ref={controls} args={[camera, domElement]} />;
-};
 
 export default Box;
