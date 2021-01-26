@@ -1,14 +1,17 @@
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import React, { useRef } from 'react';
-import { useFrame, useLoader } from 'react-three-fiber';
+import { useFrame, useLoader, useThree } from 'react-three-fiber';
 import * as THREE from 'three';
 import { TextureLoader } from 'three';
 import Images from '../../mapMaterial';
+
+extend({ OrbitControls });
 
 function Box(props) {
   const mesh = useRef();
 
   useFrame(() => {
-    mesh.current.rotation.y += 0.001;
+    // mesh.current.rotation.y += 0.001;
   });
 
   // Texture
@@ -33,5 +36,19 @@ function Box(props) {
     </mesh>
   );
 }
+
+const cameraControl = () => {
+  // ref to ThreeJs
+  const {
+    camera,
+    gl: { domElement },
+  } = useThree();
+
+  // ref to the control
+  // update them every frame using useFrame
+  const controls = useRef();
+  useFrame((state) => controls.current.update());
+  return <orbitControls ref={controls} args={[camera, domElement]} />;
+};
 
 export default Box;
