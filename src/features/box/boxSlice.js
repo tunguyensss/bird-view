@@ -1,15 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const boxSlice = createSlice({
-  name: 'box',
-  initialState: {},
+  name: 'rotate',
+  initialState: {
+    isRotate: true,
+  },
   reducers: {
     // add reducers here
-    changes: (state) => {
-      state.value += 1;
+    toggleRotate: (state) => {
+      state.isRotate = !this.state.isRotate;
     },
   },
 });
 
-export const { changes } = boxSlice.actions;
+export const { toggleRotate } = boxSlice.actions;
+
+export const defaultRotateState = (state) => state.box.isRotate;
+
 export default boxSlice.reducer;

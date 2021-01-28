@@ -10,7 +10,10 @@ function App() {
   const [currentPlace, setCurrentPlace] = useState('church');
   const [placeInfo, setPlaceInfo] = useState();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [hotspot, setHotspot] = useState();
+
+  function handleChangeView(id) {
+    setCurrentPlace(id);
+  }
 
   useEffect(() => {
     const baseApi = 'https://my-json-server.typicode.com/tunguyensss/skynav/';
@@ -21,20 +24,30 @@ function App() {
     data.then((res) => {
       setPlaceInfo(res.data);
       setIsLoaded(true);
-      setHotspot(res.hotspots);
-
-      console.log(placeInfo);
     });
   }, [currentPlace]);
 
   if (isLoaded) {
+    const spots = placeInfo.hotspots.map((item) => (
+      <Hotspot
+        id={item.id}
+        position={item['icon-position']}
+        thumb={item.thumbnail}
+        coords={item.coords}
+        currentCoord={placeInfo.coords}
+        handleClick={handleChangeView}
+        key={item.id}
+        type={item.type}
+      />
+    ));
+
     return (
       <Canvas camera={{ position: [0, 0, 0], fov: 75 }}>
         <ambientLight />
         <Suspense fallback={null}>
           <Camera />
           <Box textures={placeInfo.textures} />
-          <Hotspot />
+          {spots}
         </Suspense>
       </Canvas>
     );
