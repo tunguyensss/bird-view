@@ -1,21 +1,19 @@
 import React, { useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { useFrame, useLoader, useThree } from 'react-three-fiber';
 import * as THREE from 'three';
 import { TextureLoader } from 'three';
-import { defaultRotateState } from './boxSlice';
 
 function Box(props) {
   const { textures } = props;
-  const isRotate = useSelector(defaultRotateState);
+  // const isRotate = useSelector(selectCount);
   const mesh = useRef();
   const { gl } = useThree();
   gl.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1);
   const maxAnisotropy = gl.capabilities.getMaxAnisotropy();
 
   useFrame(() => {
-    if (isRotate) {
-      mesh.current.rotation.y += 0.005;
+    if (props.rotate) {
+      // mesh.current.rotation.y += 0.005;
     }
   });
 
