@@ -42,7 +42,7 @@ function App() {
     ));
 
     return (
-      <Canvas camera={{ position: [0, 0, 0], fov: 75 }}>
+      <Canvas camera={{ position: [0, 0, 1], fov: 75 }}>
         <ambientLight />
         <Suspense fallback={null}>
           <Camera />

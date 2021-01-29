@@ -8,7 +8,7 @@ export default function CameraControl() {
   useEffect(() => {
     const controls = new OrbitControls(camera, gl.domElement);
 
-    controls.minDistance = 3;
+    controls.minDistance = 1;
     controls.maxDistance = 20;
     return () => {
       controls.dispose();
